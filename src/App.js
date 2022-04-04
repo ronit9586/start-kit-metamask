@@ -1,24 +1,21 @@
 import logo from './logo.svg';
 import './App.css';
+import { createContext, useContext } from 'react';
+import useWallet from './hooks/useWallet';
+import Test from './Test';
 
+const WalletContext = createContext();
+
+export function useMetamask() {
+  return useContext(WalletContext);
+}
 function App() {
+  const wallet = useWallet("0x61");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <WalletContext.Provider value={wallet}>
+      <Test></Test>
+    </WalletContext.Provider>
   );
 }
 
